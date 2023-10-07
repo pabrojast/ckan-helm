@@ -5,8 +5,8 @@
 replicaCount: 1
 
 image:
-  repository: keitaro/ckan
-  tag: 2.9.9
+  repository: pabrojast/ckan
+  tag: 2.9.9-theme45
   pullPolicy: IfNotPresent
   testConnection:
     repository: busybox
@@ -23,7 +23,7 @@ fullnameOverride: "ckan"
 
 pvc:
   enabled: true
-  size: "1Gi"
+  size: "5Gi"
   storageClassName: ""
   accessmode: "ReadWriteOnce"
 
@@ -69,20 +69,20 @@ ckan:
   # ckan.sysadminName -- CKAN system admin username
   sysadminName: "ckan_admin"
   # ckan.sysadminPassword -- CKAN system admin password
-  sysadminPassword: "PasswordHere"
+  sysadminPassword: "ckan_admin"
   # ckan.sysadminApiToken -- CKAN system admin API token
   # Needs to be generated via the CKAN UI and replaced after initial deployment
-  sysadminApiToken: "replace_this_with_generated_api_token_for_sysadmin"
+  sysadminApiToken: "replace_this_with_generated_api_token_for_sysadmin2"
   # ckan.sysadminEmail -- CKAN system admin email
-  sysadminEmail: "admin@domain.com"
+  sysadminEmail: "projas@cazalac.org"
   # ckan.siteTitle -- Site title for the instance
-  siteTitle: "Site Title here"
+  siteTitle: "Water Information Network System"
   # ckan.siteId -- Site id
-  siteId: "site-id-here"
+  siteId: "IHP-WINS"
   # ckan.siteUrl -- Url for the CKAN instance
-  siteUrl: "http://localhost:5000"
+  siteUrl: "https://data.dev-wins.com"
   # ckan.ckanPlugins -- List of plugins to be used by the instance
-  ckanPlugins: "envvars image_view text_view recline_view datastore datapusher"
+  ckanPlugins: "envvars image_view text_view recline_view datastore datapusher theme_ejemplo"
   # ckan.storagePath -- Storage path to be used by the instance
   storagePath: "/var/lib/ckan/default"
   activityStreamsEmailNotifications: "true"
