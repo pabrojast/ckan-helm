@@ -5,8 +5,8 @@
 replicaCount: 1
 
 image:
-  repository: pabrojast/ckan
-  tag: 2.9.9-theme45
+  repository: pabrojast/ckan-base
+  tag: cdd920c6b31c5643a0bc6ad552ef213b813d1e97
   pullPolicy: IfNotPresent
   testConnection:
     repository: busybox
@@ -24,7 +24,7 @@ fullnameOverride: "ckan"
 pvc:
   enabled: true
   size: "5Gi"
-  storageClassName: ""
+  storageClassName: "default"
   accessmode: "ReadWriteOnce"
 
 # DBDeploymentName -- Variable for name override for postgres deployment
@@ -69,7 +69,7 @@ ckan:
   # ckan.sysadminName -- CKAN system admin username
   sysadminName: "ckan_admin"
   # ckan.sysadminPassword -- CKAN system admin password
-  sysadminPassword: "ckan_admin"
+  sysadminPassword: "pass"
   # ckan.sysadminApiToken -- CKAN system admin API token
   # Needs to be generated via the CKAN UI and replaced after initial deployment
   sysadminApiToken: "replace_this_with_generated_api_token_for_sysadmin2"
@@ -134,7 +134,7 @@ ckan:
   solr: "http://solr-headless:8983/solr/ckancollection"
   # ckan.redis -- Location of the Redis service to be used by the CKAN instance
   redis: "redis://redis-headless:6379/0"
-  spatialBackend: "solr"
+  spatialBackend: "solr-bbox"
   locale:
     offered: "en"
     default: "en"
@@ -143,12 +143,11 @@ ckan:
   # ckan.datapusherCallbackUrlBase -- Location of the CKAN k8s service to be used by the Datapusher, overriding the default site url route.
   datapusherCallbackUrlBase: http://ckan
   smtp:
-    server: "smtpServerURLorIP:port"
-    user: "smtpUser" 
-    password: "smtpPassword"
-    mailFrom: "postmaster@domain.com"
-    tls: "enabled"
-    starttls: "true"
+    server: "smtp.sendgrid.net:587"
+    user: "apikey" 
+    password: "pass"
+    mailFrom: "projas@cazalac.org"
+    starttls: "false"
   issues:
     sendEmailNotifications: "true"
 
@@ -158,8 +157,10 @@ ckan:
   #   - name: FOO
   #     value: "bar"
   #
-  extraEnv: []
-
+  extraEnv: 
+      - name: CKANEXT__CLOUDSTORAGE__DRIVER_OPTIONS
+        value: '{"key": "name_to_replace", "secret": "secret_to_replace"}'
+    
 
   readiness:
     # ckan.readiness.initialDelaySeconds -- Inital delay seconds for the readiness probe

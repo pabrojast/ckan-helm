@@ -1,0 +1,6 @@
+global:
+  rollingUpdate:
+    maxUnavailable: 1
+  exposeNodePorts: true
+  image:
+    tag: "0.0.8-a"

@@ -1,14 +1,13 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: hello-kubernetes-ingress
+  name: ckan
   namespace: ckan
   annotations:
-    cert-manager.io/cluster-issuer: "letsencrypt-prod"
-    nginx.ingress.kubernetes.io/client-body-buffer-size: 500M
-    nginx.ingress.kubernetes.io/proxy-body-size: 500M
+    cert-manager.io/cluster-issuer: letsencrypt-prod
+    kubernetes.io/ingress.class: azure/application-gateway
+
 spec:
-  ingressClassName: nginx
   tls:
     - hosts:
       - data.dev-wins.com
@@ -17,8 +16,8 @@ spec:
   - host: "data.dev-wins.com"
     http:
       paths:
-      - pathType: Prefix
-        path: "/"
+      - path: /
+        pathType: Prefix
         backend:
           service:
             name: ckan
