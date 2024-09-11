@@ -1,0 +1,24 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: terria-ingress
+  namespace: terria
+  annotations:
+    cert-manager.io/cluster-issuer: "letsencrypt-prod"
+spec:
+  ingressClassName: nginx
+  tls:
+    - hosts:
+      - terria2.dev-wins.com
+      secretName: terria-tls-2
+  rules:
+  - host: "terria2.dev-wins.com"
+    http:
+      paths:
+      - pathType: Prefix
+        path: "/"
+        backend:
+          service:
+            name: external-ip-service
+            port:
+              number: 3001

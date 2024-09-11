@@ -12,17 +12,17 @@ clientConfig:
     bingMapsKey: AkaOmRFtjAb71cXgLwAGtLbj2RpkPKtVqAIroFQsocfurCBILxIeAWPkil7hhRy_
     disclaimer:
       text: "Disclaimer: This map must not be used for navigation or precise spatial analysis"
-      url: "https://terria.dev-wins.com"
+      url: "https://data.dev-wins.com"
     globalDisclaimer:
       confirmationRequired: true
       buttonTitle: "I agree"
       title: "Disclaimer"
-      prodHostRegex: "terria.\\.com$"
+      prodHostRegex: "data.\\.com$"
       devHostRegex: "\\b(staging|preview|test|dev)\\."
       enableOnLocalhost: true
     developerAttribution:
       text: "UNESCO"
-      link: "http://terria.dev-wins.com"
+      link: "http://data.dev-wins.com"
     appName: "Terria Map"
     brandBarElements:
       [
@@ -42,9 +42,19 @@ initConfig:
   catalog: []
 serverConfig:
   port: 3001
-  allowProxyFor: []
+  allowProxyFor: [
+  "dev-wins.com",
+  ]
   initPaths:
     - "/etc/config/client"
+  trustProxy: true
+  proxyAllDomains: true
+  singlePageRouting:
+      resolvePathRelativeToWwwroot: "/index.html"
+      # Whether to route unmatched routes to /index.html and let the frontend resolve the route
+      resolveUnmatchedPathsWithIndexHtml: true
+    
+  
 resources:
   {}
   # We usually recommend not to specify default resources and to leave this as a conscious

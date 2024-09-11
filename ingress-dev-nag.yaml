@@ -1,0 +1,36 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: hello-kubernetes-ingress
+  namespace: ckan
+  annotations:
+    cert-manager.io/cluster-issuer: "letsencrypt-prod"
+    nginx.ingress.kubernetes.io/client-body-buffer-size: 5000M
+    nginx.ingress.kubernetes.io/proxy-body-size: 5000M
+    nginx.ingress.kubernetes.io/proxy-read-timeout: "3600"
+    nginx.ingress.kubernetes.io/proxy-send-timeout: "3600"
+    nginx.ingress.kubernetes.io/proxy-connect-timeout: "3600"
+spec:
+  ingressClassName: nginx
+  tls:
+    - hosts:
+      - data.dev-wins.com
+      secretName: echo-tls
+  rules:
+  - host: "data.dev-wins.com"
+    http:
+      paths:
+      - pathType: Prefix
+        path: "/"
+        backend:
+          service:
+            name: ckan
+            port:
+              number: 80
+      - path: "/csw/"
+        pathType: Prefix
+        backend:
+          service:
+            name: ckan2pycsw
+            port:
+              number: 8000

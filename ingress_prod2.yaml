@@ -1,0 +1,25 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: terria
+  namespace: ckan
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt-prod
+    kubernetes.io/ingress.class: azure/application-gateway
+    appgw.ingress.kubernetes.io/backend-path-prefix: /
+spec:
+  tls:
+    - hosts:
+      - ihp-wins.unesco.org
+      secretName: echo-tls
+  rules:
+  - host: "ihp-wins.unesco.org"
+    http:
+      paths:
+      - path: "/terria/"
+        pathType: Prefix
+        backend:
+          service:
+            name: terria-terriamap
+            port:
+              number: 80

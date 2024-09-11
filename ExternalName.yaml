@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: terria-terriamap-proxy
+  namespace: ckan
+spec:
+  type: ExternalName
+  externalName: terria-terriamap.terria.svc.cluster.local

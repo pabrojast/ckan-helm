@@ -1,0 +1,38 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ckan
+  namespace: ckan
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt-prod
+    kubernetes.io/ingress.class: azure/application-gateway
+spec:
+  tls:
+    - hosts:
+      - data.dev-wins.com
+      secretName: echo-tls
+  rules:
+  - host: "data.dev-wins.com"
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: ckan
+            port:
+              number: 80
+      - path: "/terriav7/"
+        pathType: Prefix
+        backend:
+          service:
+            name: terriav7-terriamap
+            port:
+              number: 80
+      - path: "/terriav8/"
+        pathType: Prefix
+        backend:
+          service:
+            name: terriav8-terriamap
+            port:
+              number: 80
